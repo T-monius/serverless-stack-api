@@ -37,7 +37,6 @@ provider:
         - dynamodb:DescribeTable
       Resource: "arn:aws:dynamodb:us-west-2:*:*"
 
-
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /notes
