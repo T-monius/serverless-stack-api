@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 
-AWS.config.update({ region: "us-west-2"});
+// Remove Hard coding of DynamoDB region; set in serverless.yml
+// AWS.config.update({ region: "us-west-2"});
 const client = new AWS.DynamoDB.DocumentClient();
 
 export default {
