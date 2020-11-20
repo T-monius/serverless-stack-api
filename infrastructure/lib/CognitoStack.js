@@ -17,12 +17,25 @@ export default class CognitoStack extends sst.Stack {
       generateSecret: false, // Don't need to generate secret for web app running on browsers
     });
 
+    const identityPool = new cognito.CfnIdentityPool(this, "IdentityPool", {
+      allowUnauthenticatedIdentities: false, // Don't allow unathenticated users
+      cognitoIdentityProviders: [
+        {
+          clientId: userPoolClient.userPoolClientId,
+          providerName: userPool.userPoolProviderName,
+        },
+      ],
+    });
+
     // Export values
     new CfnOutput(this, "UserPoolId", {
       value: userPool.userPoolId,
     });
     new CfnOutput(this, "UserPoolClientId", {
       value: userPoolClient.userPoolClientId,
+    });
+    new CfnOutput(this, "IdentityPoolId", {
+      value: identityPool.ref,
     });
   }
 }
