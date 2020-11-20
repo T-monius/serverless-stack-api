@@ -27,12 +27,12 @@ provider:
   # the following line. Also, make sure to not
   # commit your .env.
   #
+  # These environment variables are made available to our functions
+  # under process.env.
   environment:
-   tableName: notes
-   stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    tableName: !ImportValue '${self:custom.sstApp}-TableName'
 
-  # 'iamRoleStatements' defines the permission policy for the Lambda function.
-  # In this case Lambda functions are granted with permissions to access DynamoDB.
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -43,7 +43,10 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:DescribeTable
-      Resource: "arn:aws:dynamodb:us-west-2:*:*"
+      # Restrict our IAM role permissions to
+      # the specific table for the stage
+      Resource:
+        - !ImportValue '${self:custom.sstApp}-TableArn'
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
