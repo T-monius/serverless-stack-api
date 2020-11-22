@@ -31,7 +31,7 @@ provider:
   # under process.env.
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
-    notesTableName: !ImportValue '${self:custom.sstApp}-TableName'
+    tableName: !ImportValue '${self:custom.sstApp}-TableName'
     collaboratorsTableName: !ImportValue '${self:custom.sstApp}-CollaboratorsTableName'
 
   iamRoleStatements:
