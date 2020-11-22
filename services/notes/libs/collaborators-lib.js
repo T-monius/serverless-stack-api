@@ -1,5 +1,5 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import handler from "./handler-lib";
+import dynamoDb from "./dynamodb-lib";
 
 const getCollaborators = async (currentUserId) => {
   const params = {
@@ -18,4 +18,4 @@ const getCollaborators = async (currentUserId) => {
   return result.Item;
 };
 
-export getCollaborators;
+export { getCollaborators };
