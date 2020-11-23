@@ -4,11 +4,10 @@ import getCollaborators from "./libs/collaborators-lib";
 
 export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
-  const newCollaboratorEmail = data.email;
+  const newCollaboratorId = data.collaboratorId;
   const userId = event.requestContext.identity.cognitoIdentityId;
   const collaborators = await getCollaborators(userId);
-  // TODO: Retrieve userId of new collaborator by email
-  //   Add userId of new collaborator to existing collaborators
+  collaborators.push(collaboratorId);
 
   const params = {
     TableName: process.env.collaboratorsTableName,
