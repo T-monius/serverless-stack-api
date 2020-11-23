@@ -123,6 +123,31 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  # TODO: Separate out Collaborators and Notes endpoints to separate yml
+  createCollaborator:
+    # Defines an HTTP API endpoint that calls the main function in addCollaborator.js
+    # - path: url path is /collaborators
+    # - method: POST request
+    handler: createCollaborator.main
+    events:
+      - http:
+          path: collaborators
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  getCollaborationId:
+    # Defines an HTTP API endpoint that calls the main function in getCollaborationId.js
+    # - path: url path is /collaborators
+    # - method: GET request
+    handler: getCollaborationId.main
+    events:
+      - http:
+          path: collaborators
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
