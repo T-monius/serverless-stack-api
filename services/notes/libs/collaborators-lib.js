@@ -1,4 +1,3 @@
-import handler from "./handler-lib";
 import dynamoDb from "./dynamodb-lib";
 
 const getCollaborators = async (currentUserId) => {

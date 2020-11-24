@@ -7,7 +7,7 @@ export const main = handler(async (event, context) => {
   const newCollaboratorId = data.collaboratorId;
   const userId = event.requestContext.identity.cognitoIdentityId;
   const collaborators = await getCollaborators(userId);
-  collaborators.push(collaboratorId);
+  collaborators.push(newCollaboratorId);
 
   const params = {
     TableName: process.env.collaboratorsTableName,
