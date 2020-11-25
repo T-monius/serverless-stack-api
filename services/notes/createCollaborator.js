@@ -20,5 +20,6 @@ export const main = handler(async (event, context) => {
 
   await dynamoDb.put(params);
 
+  // TODO: consider whether to return anything at all or boolean
   return params.Item;
 });
