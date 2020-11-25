@@ -14,7 +14,7 @@ const getCollaborators = async (currentUserId) => {
     throw new Error("Item not found.");
   }
 
-  return result.Item;
+  return result.Item.collaborators || [];
 };
 
 export { getCollaborators };
