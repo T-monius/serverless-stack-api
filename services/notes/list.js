@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-// import getCollaborators from "./libs/collaborators-lib.js";
+import getCollaborators from "./libs/collaborators-lib.js";
 
 const listForUser = async (userId) => {
   const params = {
@@ -24,10 +24,16 @@ const listForUser = async (userId) => {
 
 export const main = handler(async (event, context) => {
   const userId = event.requestContext.identity.cognitoIdentityId;
-  const collaborators = getCollaborators(userId);
   const items = listForUser(userId);
+  let collaborators;
 
-  await collaborators;
+  try {
+    const item = await getCollaborators(userId);
+    collaborators = item.collaborators;
+  } catch {
+    collaborators = [];
+  }
+
   await items;
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
