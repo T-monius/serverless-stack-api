@@ -12,7 +12,7 @@ const getCollaborators = async (currentUserId) => {
   const result = await dynamoDb.get(params);
 
 
-  return result.Item.collaborators || [];
+  return result.Items.collaborators || [];
 };
 
 export { getCollaborators };
