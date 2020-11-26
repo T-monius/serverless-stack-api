@@ -24,18 +24,18 @@ const listForUser = async (userId) => {
 
 export const main = handler(async (event, context) => {
   const userId = event.requestContext.identity.cognitoIdentityId;
-  // const collaborators = getCollaborators(userId);
+  const collaborators = getCollaborators(userId);
   const items = listForUser(userId);
 
-  // await collaborators;
+  await collaborators;
   await items;
 
-  // const allItems = collaborators.reduce( async (items, collaboratorId) => {
-  //   const collaboratorsItems = await listForUser(collaboratorId);
-  //   return items.concat(collaboratorsItems);
-  // }, items);
+  const allItems = collaborators.reduce( async (items, collaboratorId) => {
+    const collaboratorsItems = await listForUser(collaboratorId);
+    return items.concat(collaboratorsItems);
+  }, items);
 
-  // return allItems;
+  return allItems;
 
   // const params = {
   //   TableName: process.env.tableName,
@@ -54,6 +54,4 @@ export const main = handler(async (event, context) => {
 
   // // Return the matching list of items in response body
   // return result.Items;
-
-  return items;
 });
