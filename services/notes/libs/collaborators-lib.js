@@ -1,6 +1,6 @@
 import dynamoDb from "./dynamodb-lib";
 
-const getCollaborators = async (currentUserId) => {
+const getCollaboratorsItem = async (currentUserId) => {
   const params = {
     // Potential bug: is process.env available in libs directory?
     TableName: process.env.collaboratorsTableName,
@@ -17,4 +17,4 @@ const getCollaborators = async (currentUserId) => {
   return result.Item;
 };
 
-export { getCollaborators };
+export { getCollaboratorsItem };
