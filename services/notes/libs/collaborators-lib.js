@@ -11,6 +11,9 @@ const getCollaborators = async (currentUserId) => {
 
   const result = await dynamoDb.get(params);
 
+  console.log("result: ", result);
+  console.log("result.Item", result.Item);
+
   return result.Item.collaborators || [];
 };
 
