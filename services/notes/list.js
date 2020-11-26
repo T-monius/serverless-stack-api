@@ -25,10 +25,10 @@ const listForUser = async (userId) => {
 export const main = handler(async (event, context) => {
   const userId = event.requestContext.identity.cognitoIdentityId;
   // const collaborators = getCollaborators(userId);
-  const result = listForUser(userId);
+  const items = listForUser(userId);
 
   // await collaborators;
-  await result;
+  await items;
 
   // const allItems = collaborators.reduce( async (items, collaboratorId) => {
   //   const collaboratorsItems = await listForUser(collaboratorId);
@@ -55,5 +55,5 @@ export const main = handler(async (event, context) => {
   // // Return the matching list of items in response body
   // return result.Items;
 
-  return result.items;
+  return items;
 });
