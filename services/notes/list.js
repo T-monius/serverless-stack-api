@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import getCollaborators from "./libs/collaborators-lib.js";
+import getCollaboratorsItem from "./libs/collaborators-lib.js";
 
 const listForUser = async (userId) => {
   const params = {
@@ -28,7 +28,7 @@ export const main = handler(async (event, context) => {
   let collaborators;
 
   try {
-    const item = await getCollaborators(userId);
+    const item = await getCollaboratorsItem(userId);
     collaborators = item.collaborators;
   } catch {
     collaborators = [];
