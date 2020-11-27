@@ -50,7 +50,7 @@ export const main = handler(async (event, context) => {
     collaborators = [];
   }
 
-  items = await itemsPromise;
+  const items = await itemsPromise;
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
