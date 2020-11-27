@@ -52,6 +52,7 @@ export const main = handler(async (event, context) => {
 
   await items;
 
+  console.log('items variable: ', items);
   if (!Array.isArray(items)) {
     items = [];
   }
