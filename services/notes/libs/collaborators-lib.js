@@ -16,4 +16,4 @@ const getCollaboratorsItem = async (userId) => {
   return result.Item;
 };
 
-export { getCollaboratorsItem };
+export getCollaboratorsItem;

@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import getCollaboratorsItem from "./libs/collaborators-lib.js";
+import { getCollaboratorsItem } from "./libs/collaborators-lib.js";
 
 const listForUser = async (userId) => {
   const params = {
