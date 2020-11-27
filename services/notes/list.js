@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import getCollaboratorsItem from "./libs/collaborators-lib.js";
+// import getCollaboratorsItem from "./libs/collaborators-lib.js";
 
 const listForUser = async (userId) => {
   const params = {
@@ -28,9 +28,25 @@ export const main = handler(async (event, context) => {
   let collaborators;
 
   try {
-    const collaboratorItems = await getCollaboratorsItem(userId);
-    console.log("Items from collaborators table: ", collaboratorItems);
-    collaborators = collaboratorItems[0].collaborators;
+    // const collaboratorItems = await getCollaboratorsItem(userId);
+    // console.log("Items from collaborators table: ", collaboratorItems);
+    // collaborators = collaboratorItems[0].collaborators;
+    const params = {
+      // Potential bug: is process.env available in libs directory?
+      TableName: process.env.collaboratorsTableName,
+      Key: {
+        userId: userId,
+      },
+    };
+
+    const result = await dynamoDb.get(params);
+    console.log("This is the result of a dynamoDb query: ", result);
+    if (!result.Item) {
+      throw new Error("Item not found.");
+    }
+
+    return result.Item;
+    collaborators = result.Item.collaborators;
   } catch {
     collaborators = [];
   }
