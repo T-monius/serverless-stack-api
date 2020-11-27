@@ -36,6 +36,8 @@ export const main = handler(async (event, context) => {
 
   await items;
 
+  console.log("collaborators array: ", collaborators);
+
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
     console.log("Collaborator's items: ", collaboratorsItems);
