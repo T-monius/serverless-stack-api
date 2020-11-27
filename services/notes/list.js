@@ -28,9 +28,9 @@ export const main = handler(async (event, context) => {
   let collaborators;
 
   try {
-    const item = await getCollaboratorsItem(userId);
-    console.log("collaborator's item: ", item);
-    collaborators = item.collaborators;
+    const collaboratorItems = await getCollaboratorsItem(userId);
+    console.log("Items from collaborators table: ", collaboratorItems);
+    collaborators = collaboratorItems[0].collaborators;
   } catch {
     collaborators = [];
   }
@@ -41,7 +41,7 @@ export const main = handler(async (event, context) => {
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
-    console.log("Collaborator's items: ", collaboratorsItems);
+    console.log("Items to be concatenated: ", collaboratorsItems);
     return items.concat(collaboratorsItems);
   }, items);
 
