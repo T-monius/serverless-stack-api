@@ -45,7 +45,6 @@ export const main = handler(async (event, context) => {
       throw new Error("Item not found.");
     }
 
-    return result.Item;
     collaborators = result.Item.collaborators;
   } catch {
     collaborators = [];
