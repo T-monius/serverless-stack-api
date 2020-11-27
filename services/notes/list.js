@@ -29,6 +29,7 @@ export const main = handler(async (event, context) => {
 
   try {
     const item = await getCollaboratorsItem(userId);
+    console.log("collaborator's item: ", item);
     collaborators = item.collaborators;
   } catch {
     collaborators = [];
