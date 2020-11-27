@@ -1,5 +1,4 @@
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import { listForUser } from "./libs/list-lib";
 import { getCollaboratorsItem } from "./libs/collaborators-lib.js";
 
