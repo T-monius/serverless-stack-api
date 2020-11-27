@@ -1,4 +1,4 @@
-import dynamoDb from "./libs/dynamodb-lib";
+import dynamoDb from "./dynamodb-lib";
 
 const listForUser = async (userId) => {
   const params = {
