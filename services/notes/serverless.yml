@@ -32,6 +32,7 @@ provider:
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
     tableName: !ImportValue '${self:custom.sstApp}-TableName'
+    collaboratorsTableName: !ImportValue '${self:custom.sstApp}-CollaboratorsTableName'
 
   iamRoleStatements:
     - Effect: Allow
@@ -47,6 +48,7 @@ provider:
       # the specific table for the stage
       Resource:
         - !ImportValue '${self:custom.sstApp}-TableArn'
+        - !ImportValue '${self:custom.sstApp}-CollaboratorsTableArn'
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
@@ -121,9 +123,34 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  # TODO: Separate out Collaborators and Notes endpoints to separate yml
+  createCollaborator:
+    # Defines an HTTP API endpoint that calls the main function in addCollaborator.js
+    # - path: url path is /collaborators
+    # - method: POST request
+    handler: createCollaborator.main
+    events:
+      - http:
+          path: collaborators
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  getCollaborationId:
+    # Defines an HTTP API endpoint that calls the main function in getCollaborationId.js
+    # - path: url path is /collaborators
+    # - method: GET request
+    handler: getCollaborationId.main
+    events:
+      - http:
+          path: collaborators
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
-  - ${file(resources/api-gateway-errors.yml)}
+  - ${file(../../resources/api-gateway-errors.yml)}
   # Cognito Identity Pool Policy
-  - ${file(resources/cognito-policy.yml)}
+  - ${file(../../resources/cognito-policy.yml)}

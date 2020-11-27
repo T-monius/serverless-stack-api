@@ -1,22 +1,25 @@
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import { listForUser } from "./libs/list-lib";
+import { getCollaboratorsItem } from "./libs/collaborators-lib.js";
 
 export const main = handler(async (event, context) => {
-  const params = {
-    TableName: process.env.tableName,
-    // 'KeyConditionExpression' defines the condition for the query
-    // - 'userId = :userId': only return items with matching 'userId'
-    //   partition key
-    KeyConditionExpression: "userId = :userId",
-    // 'ExpressionAttributeValues' defines the value in the condition
-    // - ':userId': defines 'userId' to be the id of the author
-    ExpressionAttributeValues: {
-      ":userId": event.requestContext.identity.cognitoIdentityId,
-    },
-  };
+  const userId = event.requestContext.identity.cognitoIdentityId;
+  const userListPromise = listForUser(userId);
+  let collaborators;
 
-  const result = await dynamoDb.query(params);
+  try {
+    const item = await getCollaboratorsItem(userId);
+    collaborators = item.collaborators;
+  } catch {
+    collaborators = [];
+  }
 
-  // Return the matching list of items in response body
-  return result.Items;
+  const userList = await userListPromise;
+
+  const allItems = collaborators.reduce( async (list, collaboratorId) => {
+    const collaboratorList = await listForUser(collaboratorId);
+    return list.concat(collaboratorList);
+  }, userList);
+
+  return allItems;
 });
