@@ -52,6 +52,7 @@ export const main = handler(async (event, context) => {
 
   await items;
 
+  console.log("items variable: ", items);
   console.log("collaborators array: ", collaborators);
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
