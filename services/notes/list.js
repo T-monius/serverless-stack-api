@@ -24,7 +24,7 @@ const listForUser = async (userId) => {
 
 export const main = handler(async (event, context) => {
   const userId = event.requestContext.identity.cognitoIdentityId;
-  const items = listForUser(userId);
+  let items = listForUser(userId);
   let collaborators;
 
   try {
@@ -52,8 +52,9 @@ export const main = handler(async (event, context) => {
 
   await items;
 
-  console.log("items variable: ", items);
-  console.log("collaborators array: ", collaborators);
+  if (!Array.isArray(items)) {
+    items = [];
+  }
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
