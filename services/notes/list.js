@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-// import getCollaboratorsItem from "./libs/collaborators-lib.js";
+import getCollaboratorsItem from "./libs/collaborators-lib.js";
 
 const listForUser = async (userId) => {
   const params = {
@@ -24,33 +24,33 @@ const listForUser = async (userId) => {
 
 export const main = handler(async (event, context) => {
   const userId = event.requestContext.identity.cognitoIdentityId;
-  let items = listForUser(userId);
+  const itemsPromise = listForUser(userId);
   let collaborators;
 
   try {
-    // const collaboratorItems = await getCollaboratorsItem(userId);
-    // console.log("Items from collaborators table: ", collaboratorItems);
-    // collaborators = collaboratorItems[0].collaborators;
-    const params = {
-      // Potential bug: is process.env available in libs directory?
-      TableName: process.env.collaboratorsTableName,
-      Key: {
-        userId: userId,
-      },
-    };
+    // const params = {
+    //   TableName: process.env.collaboratorsTableName,
+    //   Key: {
+    //     userId: userId,
+    //   },
+    // };
 
-    const result = await dynamoDb.get(params);
-    console.log("This is the result of a dynamoDb query: ", result);
-    if (!result.Item) {
-      throw new Error("Item not found.");
-    }
+    // const result = await dynamoDb.get(params);
+    // if (!result.Item) {
+    //   throw new Error("Item not found.");
+    // }
 
-    collaborators = result.Item.collaborators;
+    // collaborators = result.Item.collaborators;
+
+    console.log("getCollaboratorsItem function: ", getCollaboratorsItem);
+    const item = await getCollaboratorsItem(userId);
+    console.log("item from getCollaboratorsItem: ", item);
+    collaborators = item.collaborators;
   } catch {
     collaborators = [];
   }
 
-  items = await items;
+  items = await itemsPromise;
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
