@@ -1,3 +1,5 @@
+import dynamoDb from "./libs/dynamodb-lib";
+
 const listForUser = async (userId) => {
   const params = {
     TableName: process.env.tableName,
