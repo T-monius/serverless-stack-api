@@ -38,6 +38,7 @@ export const main = handler(async (event, context) => {
 
   const allItems = collaborators.reduce( async (items, collaboratorId) => {
     const collaboratorsItems = await listForUser(collaboratorId);
+    console.log("Collaborator's items: ", collaboratorsItems);
     return items.concat(collaboratorsItems);
   }, items);
 
