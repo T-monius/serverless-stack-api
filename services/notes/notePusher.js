@@ -4,7 +4,6 @@ import * as Pusher from "pusher";
 export const main = handler(async (event, context) => {
   // const data = JSON.parse(event.body);
   // const userId = event.Records[0].dynamodb.Keys.userId.S;
-  console.log("Pusher: ", Pusher);
   const pusher = new Pusher({
     appId: "1114436",
     key: "71006dcae7db25deafa6",
@@ -13,7 +12,6 @@ export const main = handler(async (event, context) => {
     useTLS: true
   });
 
-  console.log("pusher: ", pusher);
   const result = await pusher.trigger("my-channel", "my-event", {
     message: "'notePusher' lambda!"
   });
