@@ -1,5 +1,5 @@
 import handler from "./libs/handler-lib";
-import Pusher from "pusher";
+import * as Pusher from "pusher";
 
 export const main = handler(async (event, context) => {
   // const data = JSON.parse(event.body);
@@ -14,7 +14,11 @@ export const main = handler(async (event, context) => {
   });
 
   console.log("pusher: ", pusher);
-  pusher.trigger("my-channel", "my-event", {
+  const result = pusher.trigger("my-channel", "my-event", {
     message: "'notePusher' lambda!"
+  }, (error, request, response) => {
+    console.log("response in callback: ", response);
   });
+
+  console.log("result of pusher.trigger: ", result);
 });
