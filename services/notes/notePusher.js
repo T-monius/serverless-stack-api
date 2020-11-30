@@ -14,7 +14,7 @@ export const main = handler(async (event, context) => {
   });
 
   console.log("pusher: ", pusher);
-  pusher.trigger("ridgeline-notes", "note-table-change", {
+  pusher.trigger("my-channel", "my-event", {
     message: "'notePusher' lambda!"
   });
 });
