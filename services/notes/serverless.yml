@@ -159,7 +159,7 @@ functions:
   notePusher:
     handler: notePusher.main
     events:
-      - stream: arn:aws:dynamodb:us-east-1:811067755279:table/dev-notes-infra-dynamodb-TableCD117FA1-1JPTAT7M2J6CZ/stream/2020-11-27T21:43:22.107
+      - stream: arn:aws:dynamodb:us-east-1:811067755279:table/real-time-1-notes-infra-dynamodb-CollaboratorsTable690677AA-7KB5KL6R64W5/stream/2020-11-30T02:23:06.532
 
 # Create our resources with separate CloudFormation templates
 resources:
