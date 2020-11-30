@@ -14,10 +14,8 @@ export const main = handler(async (event, context) => {
   });
 
   console.log("pusher: ", pusher);
-  const result = pusher.trigger("my-channel", "my-event", {
+  const result = await pusher.trigger("my-channel", "my-event", {
     message: "'notePusher' lambda!"
-  }, (error, request, response) => {
-    console.log("response in callback: ", response);
   });
 
   console.log("result of pusher.trigger: ", result);
