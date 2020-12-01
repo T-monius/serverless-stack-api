@@ -1,7 +1,7 @@
 # NOTE: update this with your service name
 service: notes-api
 
-# Create an optimized package for our functions 
+# Create an optimized package for our functions
 package:
   individually: true
 
@@ -31,6 +31,11 @@ provider:
   # under process.env.
   environment:
     stripeSecretKey: ${env:STRIPE_SECRET_KEY}
+    pusherAppId: ${env:PUSHER_APP_ID}
+    pusherKey: ${env:PUSHER_KEY}
+    pusherSecret: ${env:PUSHER_SECRET}
+    pusherEventName: ${env:PUSHER_EVENT_NAME}
+    pusherChannel: ${env:PUSHER_CHANNEL}
     tableName: !ImportValue '${self:custom.sstApp}-TableName'
     collaboratorsTableName: !ImportValue '${self:custom.sstApp}-CollaboratorsTableName'
 
@@ -44,6 +49,10 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
         - dynamodb:DescribeTable
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetShardIterator
+        - dynamodb:ListStreams
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
@@ -147,6 +156,10 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+  notePusher:
+    handler: notePusher.main
+    events:
+      - stream: arn:aws:dynamodb:us-east-1:811067755279:table/dev-notes-infra-dynamodb-TableCD117FA1-1JPTAT7M2J6CZ/stream/2020-11-27T21:43:22.107
 
 # Create our resources with separate CloudFormation templates
 resources:
